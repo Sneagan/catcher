@@ -27,6 +27,7 @@ var index = {
 var add = {
   handler: function(req, reply) {
     var feed = new Feed(req.payload.podcast);
+    // Passing subscriptions and its add function to be bound when fetch completes. Async
     feed.fetch(subscriptions.addShow, subscriptions);
   }
 };
