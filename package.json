@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Sneagan/catcher",
   "dependencies": {
+    "async": "^0.9.0",
     "feed-read": "0.0.1",
     "feedparser": "^0.17.0",
     "grunt": "^0.4.5",

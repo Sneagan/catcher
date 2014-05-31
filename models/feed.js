@@ -6,7 +6,7 @@ Feed.prototype.url = '';
 Feed.prototype.title = '';
 Feed.prototype.episodes = [];
 
-Feed.prototype.fetch = function(callback, bind_me) {
+Feed.prototype.fetch = function(callback) {
   if (this.url) {
     var self = this;
     var parsed_feed;
@@ -15,11 +15,11 @@ Feed.prototype.fetch = function(callback, bind_me) {
       if (articles.length > 0) {
         self.title = articles[0].feed.name;
         self.episodes = articles;
-        var run = callback.bind(bind_me, self);
-        run();
+
+        callback(null, self);
       }
     };
-
+    
     request({
       uri: this.url,
       method: "GET",

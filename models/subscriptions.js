@@ -2,10 +2,11 @@ var Subscriptions = function() {};
 
 Subscriptions.prototype.shows = [];
 
-Subscriptions.prototype.addShow = function(feed) {
+Subscriptions.prototype.addShow = function(feed, callback) {
   if (feed.hasOwnProperty('title') && feed.hasOwnProperty('episodes')) {
     this.shows.push(feed);
   }
+  callback(null, this.shows);
 };
 
 Subscriptions.prototype.removeShow = function(feed) {

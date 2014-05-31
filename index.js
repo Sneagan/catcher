@@ -1,6 +1,7 @@
 var Hapi = require('hapi');
 var Feed = require('./models/feed');
 var Subscriptions = require('./models/subscriptions');
+var async = require('async');
 
 var options = {
   views: {
@@ -26,9 +27,19 @@ var index = {
 
 var add = {
   handler: function(req, reply) {
-    var feed = new Feed(req.payload.podcast);
+    var feed = new Feed(req.payload);
     // Passing subscriptions and its add function to be bound when fetch completes. Async
-    feed.fetch(subscriptions.addShow, subscriptions);
+    async.series([
+      function(callback) {
+        feed.fetch(callback);
+      },
+      function(callback) {
+        subscriptions.addShow(feed, callback);
+      }
+    ],
+    function(err, results){
+      reply({subscriptions: results});
+    });
   }
 };
 
@@ -42,7 +53,7 @@ server.route({
 
 server.route({
   method: 'POST',
-  path: '/add_feed',
+  path: '/add',
   config: add
 });
 
@@ -56,6 +67,22 @@ server.route({
     quotes.splice(req.params.id, 1);
     reply(true);
   }
+});
+
+// Serve static resources
+server.route({
+    method: 'GET',
+    path: '/app/{path*}',
+    handler: {
+        directory: { path: './app', listing: false, index: true }
+    }
+});
+server.route({
+    method: 'GET',
+    path: '/css/{path*}',
+    handler: {
+        directory: { path: './css', listing: false, index: true }
+    }
 });
 
 // Start the server
