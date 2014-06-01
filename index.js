@@ -28,6 +28,18 @@ var index = {
 var add = {
   handler: function(req, reply) {
     var feed = new Feed(req.payload);
+
+    var removeDuplicates = function(unfiltered, callback) {
+      // Currently checks for episodes. Should also check for dupes
+      if (callback) {
+        if (unfiltered instanceof Array) {
+          callback(true);
+          return;
+        }
+      }
+      callback(false);
+    };
+
     async.series([
       function(callback) {
         feed.fetch(callback);
@@ -37,7 +49,11 @@ var add = {
       }
     ],
     function(err, results){
-      reply({subscriptions: results});
+      async.filter(results, removeDuplicates,
+        function(results) {
+          reply({subscriptions: results[0]});
+        }
+      );
     });
   }
 };
