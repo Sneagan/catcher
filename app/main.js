@@ -57,7 +57,7 @@
 
               var $episode_audio = document.createElement('audio');
               // fails because the server feedparser doesn't properly parse out the media url.
-              $episode_audio.src = show.episodes[n].url;
+              $episode_audio.src = show.episodes[n].episode_url;
               $episode_audio.controls = true;
 
               $episode.appendChild($episode_title);
@@ -69,7 +69,6 @@
           fragment.appendChild($show_item);
         }
       show_list.innerHTML = '';
-      console.log(fragment);
       show_list.appendChild(fragment);
     };
 
