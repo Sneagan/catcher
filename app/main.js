@@ -15,8 +15,8 @@
         callback(req.responseText);
       };
     };
-    Catcher.prototype.removeShow = function(show) {
-      this.apiCall('DELETE', '/remove', show, updateShowList);
+    Catcher.prototype.removeShow = function(show_title) {
+      this.apiCall('DELETE', '/remove', show_title, updateShowList);
     };
     Catcher.prototype.addShow = function(show) {
       this.apiCall('POST', '/add', show, updateShowList);
@@ -32,6 +32,10 @@
       list = JSON.parse(list);
       var fragment = document.createDocumentFragment();
 
+      var remove = function($remover) {
+        catcher.removeShow($remover.srcElement.getAttribute('data-id'));
+      };
+
         for (var i = 0; i < list.subscriptions.length; i++) {
           var show = list.subscriptions[i];
           var $show_item = document.createElement('li');
@@ -41,7 +45,8 @@
           var $remover = document.createElement('span');
           $remover.innerHTML = 'Remove';
           $remover.className += 'remove';
-          $remover['data-id'] = show.title;
+          $remover.setAttribute('data-id', show.title);
+          $remover.onclick = remove;
 
           $show_item.appendChild($show_title);
           $show_item.appendChild($remover);
@@ -76,9 +81,4 @@
     $add_button.addEventListener('click', function() {
       catcher.addShow(document.getElementsByClassName('rss-input')[0].value);
     }, false);
-
-    var remove = function($remover) {catcher.removeShow($removers[i]);};
-    for (var i = 0; i < $removers.length; i++) {
-        $removers[i].addEventListener('click', remove($removers[i]), false);
-    }
 })();
