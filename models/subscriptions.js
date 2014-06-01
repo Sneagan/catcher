@@ -9,11 +9,12 @@ Subscriptions.prototype.addShow = function(feed, callback) {
   callback(null, this.shows);
 };
 
-Subscriptions.prototype.removeShow = function(feed) {
+Subscriptions.prototype.removeShow = function(title, callback) {
   for (var i; i < this.shows.length; i++) {
-    if (this.shows[i].title === feed.title) {
+    if (this.shows[i].title === title) {
       this.shows.splice(i, 1);
     }
+    callback(null, this.shows);
   }
 };
 

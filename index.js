@@ -28,13 +28,28 @@ var index = {
 var add = {
   handler: function(req, reply) {
     var feed = new Feed(req.payload);
-    // Passing subscriptions and its add function to be bound when fetch completes. Async
     async.series([
       function(callback) {
         feed.fetch(callback);
       },
       function(callback) {
         subscriptions.addShow(feed, callback);
+      }
+    ],
+    function(err, results){
+      reply({subscriptions: results});
+    });
+  }
+};
+
+var remove = {
+  handler: function(req, reply) {
+    async.series([
+      function(callback) {
+        feed.fetch(callback);
+      },
+      function(callback) {
+        subscriptions.removeShow(feed.title, callback);
       }
     ],
     function(err, results){
@@ -59,14 +74,8 @@ server.route({
 
 server.route({
   method: 'DELETE',
-  path: '/quote/{id}',
-  handler: function(req, reply) {
-    if (quotes.length <= req.params.id) {
-      return reply('No quote found.').code(404);
-    }
-    quotes.splice(req.params.id, 1);
-    reply(true);
-  }
+  path: '/remove',
+  config: remove
 });
 
 // Serve static resources
