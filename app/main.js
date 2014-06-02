@@ -64,6 +64,7 @@
               // fails because the server feedparser doesn't properly parse out the media url.
               $episode_audio.src = show.episodes[n].episode_url;
               $episode_audio.controls = true;
+              $episode_audio.setAttribute('type', show.episodes[n].episode_type);
 
               $episode.appendChild($episode_title);
               $episode.appendChild($episode_audio);
