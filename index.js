@@ -98,9 +98,9 @@ server.route({
 // Serve static resources
 server.route({
     method: 'GET',
-    path: '/app/{path*}',
+    path: '/public/{path*}',
     handler: {
-        directory: { path: './app', listing: false, index: true }
+        directory: { path: './public', listing: false, index: true }
     }
 });
 server.route({
