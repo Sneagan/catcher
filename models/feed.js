@@ -33,6 +33,7 @@ Feed.prototype.fetch = function(callback) {
             for (var i = 0; i < parsed_episode_objects[x].children.length; i++) {
               if (parsed_episode_objects[x].children[i].name === 'enclosure') {
                 articles[x].episode_url = parsed_episode_objects[x].children[i].attribs.url;
+                articles[x].episode_type = parsed_episode_objects[x].children[i].attribs.type;
               }
             }
           }

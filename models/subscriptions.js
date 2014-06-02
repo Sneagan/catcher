@@ -10,7 +10,7 @@ Subscriptions.prototype.addShow = function(feed, callback) {
 };
 
 Subscriptions.prototype.removeShow = function(title, callback) {
-  for (var i; i < this.shows.length; i++) {
+  for (var i = 0; i < this.shows.length; i++) {
     if (this.shows[i].title === title) {
       this.shows.splice(i, 1);
     }
