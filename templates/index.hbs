@@ -14,28 +14,7 @@
       <input type="submit" class="add-feed" value="Get Feed">
 
       <ul id="shows">
-        {{#if shows}}
-          {{#each shows}}
-            <li>
-              <h2>{{title}}</h2>
-              <span class="remove" data-id="{{title}}">Remove</span>
-              <ul>
-                {{#each episodes}}
-                  <li>
-                    <h3>{{title}}:</h3>
-                    {{#each links}}
-                      <audio src="{{href}}" controls>
-                        Your browser does not support the <code>audio</code> element.
-                      </audio>
-                    {{/each}}
-                  </li>
-                {{/each}}
-              </ul>
-            </li>
-          {{/each}}
-        {{else}}
-          <p class="empty"><em>Unbelievable.  No entries here so far</p>
-        {{/if}}
+        <p class="empty"><em>Unbelievable.</em> No entries here so far</p>
       </ul>
     </section>
     <script src="app/main.js" type="text/javascript"></script>

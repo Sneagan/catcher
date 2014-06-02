@@ -36,6 +36,18 @@
         catcher.removeShow($remover.srcElement.getAttribute('data-id'));
       };
 
+      var showMore = function($element) {
+        var elements = $element.target.parentNode.parentNode.childNodes;
+        var toggleStatus = function(index) {
+          if (elements[index].style.display === 'block') return 'none';
+          else return 'block';
+        };
+        for (var i = 0; i < elements.length; i++) {
+          if (i === 0) continue;
+          elements[i].style.display = toggleStatus(i);
+        }
+      };
+
         for (var i = 0; i < list.subscriptions.length; i++) {
           var show = list.subscriptions[i];
           var $show_item = document.createElement('li');
@@ -60,14 +72,25 @@
               var $episode_title = document.createElement('h3');
               $episode_title.innerHTML = show.episodes[n].title;
 
+              if (n === 0) {
+                $episode.classList.add('first-episode');
+                var $show_more = document.createElement('span');
+                $show_more.innerHTML = 'More Episodes';
+                $show_more.onclick = showMore;
+                $episode.appendChild($show_more);
+              } else {
+                $episode.classList.add('old-episode');
+              }
+
               var $episode_audio = document.createElement('audio');
-              // fails because the server feedparser doesn't properly parse out the media url.
               $episode_audio.src = show.episodes[n].episode_url;
               $episode_audio.controls = true;
               $episode_audio.setAttribute('type', show.episodes[n].episode_type);
+              $episode_audio.setAttribute('preload', 'none'); // Too many episodes to preload data
 
               $episode.appendChild($episode_title);
               $episode.appendChild($episode_audio);
+
               $episode_container.appendChild($episode);
             }
           }
