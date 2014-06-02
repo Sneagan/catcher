@@ -1,6 +1,6 @@
 {
   "name": "podcatcher",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "catcher =======",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "feed-read": "0.0.1",
     "grunt": "^0.4.5",
     "grunt-browserify": "^2.1.0",
+    "grunt-execute": "^0.2.1",
     "handlebars": "^2.0.0-alpha.4",
     "hapi": "^5.1.0",
     "request": "^2.36.0"
