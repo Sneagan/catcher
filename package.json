@@ -1,6 +1,6 @@
 {
   "name": "podcatcher",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "catcher =======",
   "main": "index.js",
   "scripts": {
