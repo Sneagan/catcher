@@ -11,11 +11,17 @@ module.exports = function(grunt) {
         src: ['app/main.js'],
         dest: 'public/bundle.js'
       }
+    },
+    'execute': {
+        target: {
+            src: ['index.js']
+        }
     }
   });
 
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-execute');
 
-  grunt.registerTask('compile', ['browserify']);
+  grunt.registerTask('compile', ['browserify', 'execute']);
 
 };
