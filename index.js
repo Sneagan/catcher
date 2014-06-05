@@ -38,7 +38,14 @@ var index = {
 
 var add = {
   handler: function(req, reply) {
-    var feed = new Feed(req.payload);
+    var payload = req.payload;
+    for (var item in payload) {
+      if (typeof payload !== 'string' && payload.hasOwnProperty(item)) {
+        var temp_str = req.payload[item] ? '=' + req.payload[item] : '';
+        payload = item + temp_str;
+      }
+    }
+    var feed = new Feed(payload);
 
     async.series([
       function(callback) {

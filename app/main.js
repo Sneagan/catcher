@@ -25,8 +25,13 @@ var spinner = new Spinner(opts).spin();
 var Catcher = function(){};
 Catcher.prototype.apiCall = function(method, endpoint, data, callback) {
   document.getElementById('shows').appendChild(spinner.el);
+  var content_type = '';
+  if (typeof data === 'object') content_type = 'application/json';
+  else content_type = 'text/html';
+
   var req = new XMLHttpRequest();
   req.open(method, endpoint);
+  req.setRequestHeader("Content-type", content_type);
   req.send(data);
   req.onreadystatechange = function() {
     if (req.readyState != 4) return;
